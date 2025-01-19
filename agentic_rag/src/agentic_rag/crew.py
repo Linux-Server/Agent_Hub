@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
+from crewai.tools import tool
 
 # If you want to run a snippet of code before or after the crew starts, 
 # you can use the @before_kickoff and @after_kickoff decorators
@@ -17,35 +18,29 @@ class AgenticRag():
 
 	# If you would like to add tools to your agents, you can learn more about it here:
 	# https://docs.crewai.com/concepts/agents#agent-tools
-	@agent
-	def researcher(self) -> Agent:
-		return Agent(
-			config=self.agents_config['researcher'],
-			verbose=True
-		)
+  
 
 	@agent
-	def reporting_analyst(self) -> Agent:
+	def get_agent(self) -> Agent:
 		return Agent(
-			config=self.agents_config['reporting_analyst'],
+			config=self.agents_config['get_agent'],
 			verbose=True
+			
 		)
+   
 
 	# To learn more about structured task outputs, 
 	# task dependencies, and task callbacks, check out the documentation:
 	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
+	
 	@task
-	def research_task(self) -> Task:
+	def get_restaurant(self) -> Task:
 		return Task(
-			config=self.tasks_config['research_task'],
-		)
-
-	@task
-	def reporting_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['reporting_task'],
+			config=self.tasks_config['get_restaurant'],
 			output_file='report.md'
 		)
+
+
 
 	@crew
 	def crew(self) -> Crew:
